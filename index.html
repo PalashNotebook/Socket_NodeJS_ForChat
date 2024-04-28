@@ -8,10 +8,15 @@
 <body>
     <p> Hello World </p>
     <script>
-        var socket = io();
+        var socket = io('/namespace_1');
         socket.on('broadcast', (data)=>{
+            document.body.innerHTML = '';
             document.write(data.description);
-        })
+        });
+        socket.on('welcome', (data)=>{
+            document.body.innerHTML = '';
+            document.write(data);
+        });
         socket.emit('dEvent', {description: 'from client'});
     </script>
 </body>

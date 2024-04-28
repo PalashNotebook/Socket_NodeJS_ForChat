@@ -18,11 +18,14 @@ app.get('/', (req, res) => {
     res.sendFile(filename, options);
 });
 
-io.on('connection', (socket) => {
+var cnsp = io.of('/namespace_1')
+
+cnsp.on('connection', (socket) => {
     users++;
     console.log('A user connected');
 
-    io.emit('broadcast', {description: users + ' connected'});
+    socket.emit('welcome', 'Hey Welcome to chat');
+    socket.broadcast.emit('broadcast', {description: users + ' connected'});
 
     socket.on('disconnect', () => {
         console.log('A user disconnected');
